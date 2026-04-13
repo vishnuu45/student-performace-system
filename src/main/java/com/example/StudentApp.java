@@ -29,34 +29,44 @@ class Student {
 }
 
 public class StudentApp {
+
+    public static Student findTopper(List<Student> students) {
+        return Collections.max(students, Comparator.comparingInt(s -> s.total));
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         List<Student> students = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            System.out.println("Enter Name:");
+            System.out.println("\nEnter details for Student " + (i + 1));
+
+            System.out.print("Name: ");
             String name = sc.next();
 
-            System.out.println("Enter CAT (30):");
+            System.out.print("CAT (30): ");
             int cat = sc.nextInt();
 
-            System.out.println("Enter Assignment (20):");
-            int assign = sc.nextInt();
+            System.out.print("Assignment (20): ");
+            int assignment = sc.nextInt();
 
-            System.out.println("Enter FAT (50):");
+            System.out.print("FAT (50): ");
             int fat = sc.nextInt();
 
-            students.add(new Student(name, cat, assign, fat));
+            students.add(new Student(name, cat, assignment, fat));
         }
 
-        // Find topper
-        Student topper = Collections.max(students, Comparator.comparingInt(s -> s.total));
+        Student topper = findTopper(students);
 
-        System.out.println("\n--- Results ---");
+        System.out.println("\n===== STUDENT RESULTS =====");
         for (Student s : students) {
-            System.out.println(s.name + " | Total: " + s.total + " | GPA: " + s.gpa + " | Grade: " + s.grade);
+            System.out.println(
+                s.name + " | Total: " + s.total +
+                " | GPA: " + s.gpa +
+                " | Grade: " + s.grade
+            );
         }
 
-        System.out.println("\nTopper: " + topper.name + " with " + topper.total);
+        System.out.println("\n🏆 Topper: " + topper.name + " (" + topper.total + ")");
     }
 }
